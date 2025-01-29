@@ -1,0 +1,43 @@
+.card-form {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.error {
+    color: red;
+    font-size: 0.75rem;
+}
+
+
+.container-cards {
+    border-radius: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.096);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 16px;
+    gap: 1rem;
+    margin: auto;
+    max-width: 90vw;
+    min-height: 10px;
+    padding: .5rem;
+
+    &__card {
+        align-items: flex-start;
+        box-shadow: 3px 3px 5px 0px gray;
+        background-color: black;
+        border-radius: 8px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        height: 3rem;
+        justify-content: space-between;
+        outline: 1px solid gray;
+        padding: 1rem;
+        width: 9rem;
+    }
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}

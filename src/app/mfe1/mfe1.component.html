@@ -1,1 +1,29 @@
+<hr>
+
 <p>Micro Frontend 1 component  works!</p>
+
+<div class="card-form">
+    <form [formGroup]="cardForm" (ngSubmit)="addCard()">
+        <label for="cardNumber">Número de Tarjeta:</label>
+        <input type="text" id="cardNumber" formControlName="cardNumber" maxlength="12" placeholder="1234 5678 9123">
+        <div class="error" *ngIf="cardForm.get('cardNumber')?.errors?.['required'] && cardForm.touched">
+            Campo obligatorio
+        </div>
+        <div class="error" *ngIf="cardForm.get('cardNumber')?.errors?.['minlength']">
+            Número de tarjeta requiere 12 caracteres
+        </div>
+        <br>
+        <button type="submit" [disabled]="!cardForm.valid">Agregar Tarjeta</button>
+    </form>
+</div>
+
+<section class="container-cards" *ngIf="cards.length > 0">
+
+    <article class="container-cards__card" *ngFor="let card of cards">
+      <p class="container-cards__card__type">débito</p>
+      <p class="container-cards__card__number">{{ card.cardNumber | maskCardNumber }}</p>
+    </article>
+  
+</section>
+
+<router-outlet></router-outlet>

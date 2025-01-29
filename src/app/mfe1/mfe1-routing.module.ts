@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Mfe1Component } from './mfe1.component';
 
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./mfe1.component').then(m => m.Mfe1Component)
+    component: Mfe1Component
   }
 ];
 
