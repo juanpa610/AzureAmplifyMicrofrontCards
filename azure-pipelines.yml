@@ -1,8 +1,3 @@
-# Node.js with Angular
-# Build a Node.js project that uses Angular.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
 - main
 
@@ -13,15 +8,8 @@ pool:
 
 variables:
   - group: AWS_CREDENTIALS
-  - name: 'S3_BUCKET_NAME'
-    value: 'azure-devops-bucket-s3'
-  - name: 'AWS_REGION'
-    value: 'us-east-1'
   - name: 'AZP_AGENT_CLEANUP_PSMODULES_IN_POWERSHELL'
     value: 'true'
-  - name: 'AZURE_DEVOPS_PAT'
-    value: $(MY_SECRET_PAT)
-
 
 steps:
 # Paso : Imprimir el PATH
@@ -94,11 +82,14 @@ steps:
     amplify publish --yes
   displayName: '🚀 Publicar cambios en AWS Amplify'
 
-# 🚀 **Activar el pipeline "AzureMicrosoftAmplifyShell.git" al finalizar**
-- script: |
-    curl -u ":$(AZURE_DEVOPS_PAT)" ^
-      -X POST ^
-      -H "Content-Type: application/json" ^
-      -d "{\"definition\": {\"id\": 13}}" ^
-      "https://dev.azure.com/juanparrestrepo3/Example%20project/_apis/build/builds?api-version=7.1-preview.7"
+
+- powershell: |
+    $url = "https://dev.azure.com/juanparrestrepo3/Example%20project/_apis/build/builds?api-version=7.1-preview.7"
+    $body = @{ definition = @{ id = 13 } } | ConvertTo-Json -Depth 10
+    $headers = @{
+      Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$(AZURE_DEVOPS_PAT)"))
+      "Content-Type" = "application/json"
+    }
+    $response = Invoke-RestMethod -Uri $url -Method Post -Body $body -Headers $headers
+    Write-Host "API Response: $response"
   displayName: '🚀 Activar AzureMicrofrontAmplifyShell.git'
