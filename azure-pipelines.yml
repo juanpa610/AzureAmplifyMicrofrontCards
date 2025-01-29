@@ -85,7 +85,7 @@ steps:
 
 - powershell: |
     $url = "https://dev.azure.com/juanparrestrepo3/Example%20project/_apis/build/builds?api-version=7.1-preview.7"
-    $body = @{ definition = @{ id = 15 } } | ConvertTo-Json -Depth 10
+    $body = @{ definition = @{ id = 14 } } | ConvertTo-Json -Depth 10
     $headers = @{
       Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$(AZURE_DEVOPS_PAT)"))
       "Content-Type" = "application/json"
